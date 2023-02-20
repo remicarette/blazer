@@ -44,6 +44,19 @@ module Blazer
         @query.data_source ||= upload_settings["data_source"]
         @query.statement ||= "SELECT * FROM #{upload.table_name} LIMIT 10"
       end
+
+      @smart_variables = {}
+      data_source = Blazer.data_sources["main"]
+      data_source.smart_variables.each do |id, s|
+        results = parse_smart_variables(id, data_source)
+
+        smart_var = results[0]
+        error = results[1]
+
+        if !error
+          @smart_variables[id] = smart_var
+        end
+      end
     end
 
     def create

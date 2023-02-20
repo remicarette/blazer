@@ -68,6 +68,24 @@
   </div>
 </div>
 
+<div style="margin-top: 8px;">
+  <div class="row">
+    <h4>Smart variables</h4>
+    <p>You can use a smart variable with {NAME} to get the smart list below.</p>
+    <p>You can manage smart_variables here <%= link_to "#", "/smart_variables" %></p>
+  </div>
+  <% @smart_variables.each do |smart_variable, values| %>
+    <div class="row" style="margin-bottom: 16px;">
+      <div style="margin-bottom: 8px;"><strong>{<%= smart_variable %>}</strong></div>
+      <select class="form-control">
+        <% values.each do |value| %>
+          <option value="<%= value[0] %>"><%= value[1] %></option>
+        <% end %>
+      </select>
+    </div>
+  <% end %>
+</div>
+
 <script>
   <%= blazer_js_var "variableParams", @variable_params %>
   <%= blazer_js_var "previewStatement", Blazer.data_sources.to_h { |k, v| [k, (v.preview_statement rescue "")] } %>
