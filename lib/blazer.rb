@@ -115,24 +115,29 @@ module Blazer
   end
 
   def self.settings
-    @settings ||= begin
-      path = Rails.root.join("config", "blazer.yml").to_s
-      if File.exist?(path)
-        YAML.safe_load(ERB.new(File.read(path)).result)
-      else
-        {}
-      end
+    @settings = {}
+
+    path = Rails.root.join("config", "blazer.yml").to_s
+    if File.exist?(path)
+      @settings = YAML.safe_load(ERB.new(File.read(path)).result)
     end
+
+    smart_vars_path = Rails.root.join("public", "smart_variables.yml").to_s
+    if File.exist?(smart_vars_path)
+      smart_vars = YAML.safe_load(ERB.new(File.read(smart_var_path)).result)
+      @settings["data_sources"]["main"]["smart_variables"] = smart_vars
+    end
+
+    @settings
   end
 
   def self.data_sources
-    @data_sources ||= begin
-      ds = Hash.new { |hash, key| raise Blazer::Error, "Unknown data source: #{key}" }
-      settings["data_sources"].each do |id, s|
-        ds[id] = Blazer::DataSource.new(id, s)
-      end
-      ds
+    @data_sources = Hash.new { |hash, key| raise Blazer::Error, "Unknown data source: #{key}" }
+
+    settings["data_sources"].each do |id, s|
+      @data_sources[id] = Blazer::DataSource.new(id, s)
     end
+    @data_sources
   end
 
   def self.run_checks(schedule: nil)
