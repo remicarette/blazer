@@ -124,7 +124,7 @@ module Blazer
 
     smart_vars_path = Rails.root.join("public", "smart_variables.yml").to_s
     if File.exist?(smart_vars_path)
-      smart_vars = YAML.safe_load(ERB.new(File.read(smart_var_path)).result)
+      smart_vars = YAML.safe_load(ERB.new(File.read(smart_vars_path)).result)
       @settings["data_sources"]["main"]["smart_variables"] = smart_vars
     end
 
