@@ -12,6 +12,8 @@ Blazer::Engine.routes.draw do
     get :run, on: :member
   end
 
+  resources :smart_variables
+
   resources :dashboards, except: [:index] do
     post :refresh, on: :member
   end

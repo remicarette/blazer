@@ -1,0 +1,50 @@
+<div class="container mt-3">
+
+    <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+        <h2>Smart variables</h2>
+        <div class="btn-group">
+            <%= link_to "New variable", new_smart_variable_path, class: "btn btn-info" %>
+            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><%= link_to "Home", root_path %></li>
+                <li><%= link_to "Checks", checks_path %></li>
+                <li role="separator" class="divider"></li>
+                <li><%= link_to "New Query", new_query_path %></li>
+                <li><%= link_to "New Dashboard", new_dashboard_path %></li>
+                <li><%= link_to "New Check", new_check_path %></li>
+            </ul>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Value</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody class="list">
+            <% @smart_variables.each do |smart_variable| %>
+                <tr>
+                    <td>
+                        <%= smart_variable.key %>
+                    </td>
+                    <td>
+                        <%= smart_variable.value %>
+                    </td>
+                    <td>
+                        <%= link_to "Edit", edit_smart_variable_path(smart_variable) %>
+                    </td>
+                    <td>
+                        <%= link_to "Delete", smart_variable_path(smart_variable), class: "text-danger", method: :delete, data: { confirm: "Are you sure ?"} %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>  

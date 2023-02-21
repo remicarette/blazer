@@ -45,18 +45,7 @@ module Blazer
         @query.statement ||= "SELECT * FROM #{upload.table_name} LIMIT 10"
       end
 
-      @smart_variables = {}
-      data_source = Blazer.data_sources["main"]
-      data_source.smart_variables.each do |id, s|
-        results = parse_smart_variables(id, data_source)
-
-        smart_var = results[0]
-        error = results[1]
-
-        if !error
-          @smart_variables[id] = smart_var
-        end
-      end
+      build_smart_variables
     end
 
     def create
@@ -78,6 +67,7 @@ module Blazer
       @smart_vars = {}
       @sql_errors = []
       @bind_vars.each do |var|
+        @statement.data_source.smart_variables = SmartVariable.to_hash_key_value
         smart_var, error = parse_smart_variables(var, @statement.data_source)
         @smart_vars[var] = smart_var if smart_var
         @sql_errors << error if error
@@ -89,6 +79,7 @@ module Blazer
     end
 
     def edit
+      build_smart_variables
     end
 
     def run
@@ -229,6 +220,23 @@ module Blazer
     end
 
     private
+
+    def build_smart_variables
+      data_source = Blazer.data_sources["main"]
+      data_source.smart_variables = SmartVariable.to_hash_key_value
+      @smart_variables = {}
+      data_source.smart_variables.each do |id, s|
+        results = parse_smart_variables(id, data_source)
+
+        smart_var = results[0]
+        error = results[1]
+
+        if !error
+          @smart_variables[id] = smart_var
+        end
+      end
+    end
+
 
     def set_data_source
       @data_source = Blazer.data_sources[params[:data_source]]

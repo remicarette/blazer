@@ -1,0 +1,112 @@
+
+<div id="smart_variable_form" data-keys="<%= @keys %>" data-actual-key="<%= @smart_variable.key %>">
+    <h3 class="mb-3">
+        <% if @smart_variable.persisted? %>
+            Modifier la smart variable
+        <% else %>
+            Ajouter une smart variable</h3>
+        <% end  %>
+    </h3>
+
+    <% if @smart_variable.errors %>
+        <% @smart_variable.errors.each do |error| %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        <% end %>
+    <% end %>
+
+    <%= simple_form_for @smart_variable do |f| %>
+        <%= f.input :key %>
+        <div id="keyError" class="text-danger"></div>
+        <%= f.input :value %>
+        <div id="valueError" class="text-danger"></div>
+        <div id="emailHelp" class="form-text mb-3">Format should be '["day", "week", "month"]' or '{0: "Active", 1: "Archived"}" or 'SELECT id, name FROM occupations ORDER BY name ASC'</div>
+
+        <%= f.submit class: "btn btn-primary", id: "submit" %>
+    <% end %>
+</div>
+
+<script>
+    const smartVariableForm = document.getElementById('smart_variable_form')
+    const keys = JSON.parse(smartVariableForm.dataset.keys)
+    const actualKey = smartVariableForm.dataset.actualKey
+
+    const submitBtn = document.getElementById('submit')
+    const keyInput = document.getElementById('smart_variable_key')
+    const keyError = document.getElementById('keyError')
+    const valueInput = document.getElementById('smart_variable_value')
+    const valueError = document.getElementById('valueError')
+
+
+
+
+    keyInput.addEventListener('input', (event) => {
+        const value = event.currentTarget.value; 
+
+        if (keys.includes(value) && value !== actualKey) {
+            keyError.innerText = 'This key already exists'
+            submitBtn.disabled = true
+        } else {
+            keyError.innerText = ''
+            submitBtn.disabled = false
+        }
+    })
+
+    keyInput.addEventListener('keydown', (event) => {
+        if (event.keyCode === 13) {
+            event.preventDefault()
+        }
+    })
+
+    valueInput.addEventListener('keydown', (event) => {
+        if (event.keyCode === 13) {
+            event.preventDefault()
+        }
+    })
+
+    valueInput.addEventListener('change', (event) => {
+        console.log(event)
+
+        const value = event.currentTarget.value;
+
+        const start = value.charAt(0)
+        const end = value.charAt(value.length - 1)
+
+
+        if (start === '[' && end === ']') {
+            valueError.innerText = ''
+            submitBtn.disabled = false
+            return
+        }
+
+        if (start === '[' && end !== ']') {
+            valueError.innerText = 'Missing closing bracket ]'
+            submitBnt.disabled = true
+            return
+        }
+
+        if (start === '{' &&  end === '}') {
+            valueError.innerText = ''
+            submitBtn.disabled = false
+            return
+        }
+
+        if (start === '{' && end !== '}') {
+            valueError.innerText = 'Missing closing bracket }'
+            submitBtn.disabled = true
+            return
+        }
+
+        const startBySelect = value.substring(0, 6).toUpperCase() === 'SELECT'
+
+        if (startBySelect) {
+            valueError.innerText = ''
+            submitBtn.disabled = false
+            return
+        }
+    
+        valueError.innerText = 'Invalid format'
+        submitBtn.disabled = true
+    })
+</script>

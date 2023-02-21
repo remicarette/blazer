@@ -10,12 +10,14 @@
       </button>
       <ul class="dropdown-menu">
         <li><%= link_to "Home", root_path %></li>
+        <li><%= link_to "Smart variables", smart_variables_path %></li>
         <% if Blazer.uploads? %>
           <li><%= link_to "Uploads", uploads_path %></li>
         <% end %>
         <li role="separator" class="divider"></li>
         <li><%= link_to "New Query", new_query_path %></li>
         <li><%= link_to "New Dashboard", new_dashboard_path %></li>
+        <li><%= link_to "New Smart Variable", new_smart_variable_path %></li>
       </ul>
     </div>
   </div>

@@ -3,6 +3,7 @@ module Blazer
     extend Forwardable
 
     attr_reader :id, :settings
+    attr_writer :smart_variables
 
     def_delegators :adapter_instance, :schema, :tables, :preview_statement, :reconnect, :cost, :explain, :cancel, :supports_cohort_analysis?, :cohort_analysis_statement
 
@@ -25,6 +26,10 @@ module Blazer
 
     def smart_columns
       settings["smart_columns"] || {}
+    end
+
+    def smart_variables=(new_smart_variables)
+      settings["smart_variables"] = new_smart_variables
     end
 
     def smart_variables

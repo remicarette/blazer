@@ -31,6 +31,7 @@ module Blazer
       @data_sources = @queries.map { |q| Blazer.data_sources[q.data_source] }.uniq
       @bind_vars.each do |var|
         @data_sources.each do |data_source|
+          data_source.smart_variables = SmartVariable.to_hash_key_value
           smart_var, error = parse_smart_variables(var, data_source)
           ((@smart_vars[var] ||= []).concat(smart_var)).uniq! if smart_var
           @sql_errors << error if error
