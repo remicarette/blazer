@@ -24,6 +24,7 @@
         <tr>
             <th>Name</th>
             <th>Value</th>
+            <th>Creator</th>
             <th></th>
             <th></th>
         </tr>
@@ -35,13 +36,18 @@
                         <%= smart_variable.key %>
                     </td>
                     <td>
-                        <%= smart_variable.value %>
+                        <%= smart_variable.value.truncate(50) %>
+                    </td>
+                    <td>
+                        <%= smart_variable.user&.name %>
                     </td>
                     <td>
                         <%= link_to "Edit", edit_smart_variable_path(smart_variable) %>
                     </td>
                     <td>
-                        <%= link_to "Delete", smart_variable_path(smart_variable), class: "text-danger", method: :delete, data: { confirm: "Are you sure ?"} %>
+                        <% if smart_variable.user === current_user %>
+                            <%= link_to "Delete", smart_variable_path(smart_variable), class: "text-danger", method: :delete, data: { confirm: "Are you sure ?"} %>
+                        <% end %>
                     </td>
                 </tr>
             <% end %>

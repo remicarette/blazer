@@ -12,6 +12,8 @@ module Blazer
     
         def create 
             @smart_variable = SmartVariable.new(smart_variable_params)
+            @smart_variable.user = current_user
+
             if @smart_variable.save
                 redirect_to smart_variables_path, notice: "Smart Variable created"
             else

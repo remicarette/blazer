@@ -1,5 +1,7 @@
 module Blazer
     class SmartVariable < Record
+        belongs_to :user
+        
         validates :key, presence: true, uniqueness: true
         validates :value, presence: true
         
