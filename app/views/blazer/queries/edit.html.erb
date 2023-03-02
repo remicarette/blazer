@@ -1,5 +1,5 @@
 <% blazer_title "Edit - #{@query.name}" %>
 
-<%= render partial: "blazer/shared/static_topbar", locals: { title: "Edit: #{@query.name}" } %>
+<%= render partial: "blazer/shared/static_topbar", locals: { title: "Edit: #{@query.name}", secondary: { show: false } } %>
 
 <%= render partial: "form" %>
