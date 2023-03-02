@@ -45,6 +45,11 @@
         <%= button_to "Download", run_queries_path(format: "csv"), params: run_data, class: "btn btn-primary" %>
       </div>
     </div>
+    <div>
+      <p class="text-muted text-center">
+        <%= query.description %>
+      </p>
+    </div>
     <div id="chart-<%= i %>" class="chart">
       <p class="text-muted">Loading...</p>
     </div>
