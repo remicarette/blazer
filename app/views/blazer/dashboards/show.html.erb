@@ -32,8 +32,19 @@
 <% end %>
 
 <% @queries.each_with_index do |query, i| %>
+  <% if i > 0 %>
+    <hr style="border-color: #3F3F3F">
+  <% end %>
   <div class="chart-container">
-    <h4><%= link_to query.friendly_name, query_path(query, params: variable_params(query)), target: "_blank" %></h4>
+
+    <div style="display: flex; justify-content: between;">
+      <div>&nbsp;</div>
+      <h4 style="flex-grow: 1;text-align: center;"><%= link_to query.friendly_name, query_path(query, params: variable_params(query)), target: "_blank" %></h4>
+      <div style="display: flex; justify-content: end;">
+        <% run_data = {statement: query.statement, query_id: query.id, data_source: query.data_source, variables: variable_params(query)} %>
+        <%= button_to "Download", run_queries_path(format: "csv"), params: run_data, class: "btn btn-primary" %>
+      </div>
+    </div>
     <div id="chart-<%= i %>" class="chart">
       <p class="text-muted">Loading...</p>
     </div>
