@@ -26,8 +26,8 @@
             create: true
           });
         </script>
-      <% elsif var.end_with?("_at") || var == "start_time" || var == "end_time" %>
-        <%= hidden_field_tag var, var_params[var] %>
+      <% elsif var.end_with?("_at") || var == "start_time" || var == "end_time" || var.end_with?("_date") %>
+        <%= hidden_field_tag var, var_params[var], data: { convert: var.end_with?("_date") ? "date": "time" } %>
 
         <div class="selectize-control single" style="width: 200px;">
           <div id="<%= var %>-select" class="selectize-input" style="display: inline-block;">
@@ -49,7 +49,13 @@
             // hack to start with empty date
             datePicker.on("apply.daterangepicker", function(ev, picker) {
               datePicker.find("span").html(toDate(picker.startDate).format("MMMM D, YYYY"))
-              input.val(toDate(picker.startDate).utc().format())
+
+              if (input.data('convert') === "date") {
+                input.val(toDate(picker.startDate).utc().format().split('T')[0])
+              } else {
+                input.val(toDate(picker.startDate).utc().format())
+              }
+
               submitIfCompleted($("#<%= var %>").closest("form"))
             })
             if (input.val().length > 0) {
@@ -59,7 +65,7 @@
           })()
         </script>
       <% else %>
-        <%= text_field_tag var, var_params[var], style: "width: 120px; margin-right: 20px;", autofocus: i == 0 && !var.end_with?("_at") && !var_params[var], class: "form-control" %>
+        <%= text_field_tag var, var_params[var], style: "width: 120px; margin-right: 20px;", autofocus: i == 0 && !var.end_with?("_at") && !var.end_with?("_date") && !var_params[var], class: "form-control" %>
       <% end %>
     <% end %>
 

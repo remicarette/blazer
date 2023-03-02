@@ -24,6 +24,14 @@ module Blazer
             value = value.to_s.gsub(" ", "+") # fix for Quip bug
           end
 
+          if var.end_with?("_date")
+            begin
+              value = Blazer.time_zone.parse(value)
+            rescue
+              # do nothing
+            end
+          end
+
           if var.end_with?("_at")
             begin
               value = Blazer.time_zone.parse(value)
