@@ -1,9 +1,10 @@
+<% blazer_title "Edit - #{@smart_variable.key}" %>
+
+<%= render partial: "blazer/shared/static_topbar", locals: { title: "Edit : #{@smart_variable.key}" } %>
+
 <div class="container mt-4">
     <div class="row">
         <div class="col-12">
-            <div class="d-flex justify-content-end">
-                <%= link_to "Retour", smart_variables_path, class: "btn btn-secondary" %>
-            </div>
             <%= render "form" %>
         </div>
     </div>

@@ -1,13 +1,5 @@
 
 <div id="smart_variable_form" data-keys="<%= @keys %>" data-actual-key="<%= @smart_variable.key %>">
-    <h3 class="mb-3">
-        <% if @smart_variable.persisted? %>
-            Modifier la smart variable
-        <% else %>
-            Ajouter une smart variable</h3>
-        <% end  %>
-    </h3>
-
     <% if @smart_variable.errors %>
         <% @smart_variable.errors.each do |error| %>
             <div class="alert alert-danger" role="alert">

@@ -1,9 +1,17 @@
+<% blazer_title "New smart variable" %>
+
+<%= render partial: "blazer/shared/static_topbar", locals: { 
+                                                    title: "New smart variable", 
+                                                    secondary: { 
+                                                        show: false,
+                                                        name: "Smart variables", 
+                                                        path: smart_variables_path 
+                                                    } 
+                                                } %>
+
 <div class="container mt-4">
     <div class="row">
         <div class="col-12">
-            <div class="d-flex justify-content-end">
-                <%= link_to "Retour", smart_variables_path, class: "btn btn-secondary" %>
-            </div>
             <%= render "form" %>
         </div>
     </div>

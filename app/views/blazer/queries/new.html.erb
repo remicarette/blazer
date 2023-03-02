@@ -1,2 +1,12 @@
 <% blazer_title "New Query" %>
+
+<%= render partial: "blazer/shared/static_topbar", locals: { 
+                                                    title: "New Query", 
+                                                    secondary: { 
+                                                        show: false,
+                                                        name: "Queries", 
+                                                        path: queries_path 
+                                                    } 
+                                                } %>
+
 <%= render partial: "form" %>
