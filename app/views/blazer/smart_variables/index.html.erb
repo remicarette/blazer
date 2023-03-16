@@ -12,7 +12,13 @@
     <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
         <h2>Smart variables</h2>
         <div class="btn-group">
-            <%= link_to "New variable", new_smart_variable_path, class: "btn btn-info" %>
+            <% if current_user.can_edit_blazer? %>
+                <%= link_to "New variable", new_smart_variable_path, class: "btn btn-info" %>
+            <% end %>
+
+            <% if current_user.viewer? %>
+                <%= link_to "Smart variables", smart_variables_path, class: "btn btn-info" %>
+            <% end %>
             <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
@@ -20,10 +26,13 @@
             <ul class="dropdown-menu">
                 <li><%= link_to "Home", root_path %></li>
                 <li><%= link_to "Checks", checks_path %></li>
-                <li role="separator" class="divider"></li>
-                <li><%= link_to "New Query", new_query_path %></li>
-                <li><%= link_to "New Dashboard", new_dashboard_path %></li>
-                <li><%= link_to "New Check", new_check_path %></li>
+
+                <% if current_user.can_edit_blazer? %>
+                    <li role="separator" class="divider"></li>
+                    <li><%= link_to "New Query", new_query_path %></li>
+                    <li><%= link_to "New Dashboard", new_dashboard_path %></li>
+                    <li><%= link_to "New Check", new_check_path %></li>
+                <% end %>
             </ul>
         </div>
     </div>

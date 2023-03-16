@@ -18,7 +18,10 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
+    <%= render "blazer/shared/navbar" %>
     <div class="container">
+      <%= render "blazer/shared/flashes" %>
+
       <%= yield %>
     </div>
   </body>

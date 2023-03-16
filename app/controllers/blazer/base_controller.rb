@@ -6,6 +6,8 @@ module Blazer
     skip_after_action(*filters, raise: false)
     skip_around_action(*filters, raise: false)
 
+    before_action :check_authorization
+
     clear_helpers
 
     protect_from_forgery with: :exception
@@ -31,6 +33,16 @@ module Blazer
     layout "blazer/application"
 
     private
+
+    def check_authorization
+      p params
+
+      if ["new", "edit", "update", "destroy"].include?(params[:action]) 
+        flash[:notice] = "You need to be an editor to perform this action."
+        redirect_to root_path, notice: "You can not edit" unless current_user.can_edit_blazer?
+      end
+    end
+
 
     def process_vars(statement, var_params = nil)
       var_params ||= request.query_parameters

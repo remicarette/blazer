@@ -1,0 +1,28 @@
+<div style="display: flex; justify-content: space-between;padding: 8px 16px;">
+  <%= link_to root_path, class: "" do %>
+      <%= image_tag "logo_naomi.png", width: 40 %>
+  <% end %>
+
+  <div style="display: flex; align-items: center;">
+    <div style="margin-right: 8px;">
+      <%= link_to "Stats", root_path %>
+    </div>
+
+    <div class="btn-group">
+      <%= image_tag "https://api.dicebear.com/5.x/initials/svg?backgroundColor=2233B0&seed=#{current_user.initials}", 
+                    class: "avatar dropdown-toggle", 
+                    data: { toggle: "dropdown" },
+                    'aria-haspopup': true,
+                    'aria-expanded': false %>
+      <ul class="dropdown-menu dropdown-menu-right" style="right: 0px !important;">
+        <li class="dropdown-item">
+          <%= link_to "Profile", "/profile" %>
+        </li>
+        <li class="dropdown-item">
+          <%= link_to "Se déconnecter", "/users/sign_out", method: :delete %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
