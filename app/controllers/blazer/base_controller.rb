@@ -35,11 +35,12 @@ module Blazer
     private
 
     def check_authorization
-      p params
-
       if ["new", "edit", "update", "destroy"].include?(params[:action]) 
-        flash[:notice] = "You need to be an editor to perform this action."
-        redirect_to root_path, notice: "You can not edit" unless current_user.can_edit_blazer?
+        unless current_user.can_edit_blazer?
+          flash[:notice] = "You need to be an editor to perform this action."
+          redirect_to root_path
+          return 
+        end
       end
     end
 
