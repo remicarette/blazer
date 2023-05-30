@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gemspec
 
+gem "rack", '= 2.2.6.3'
 gem "rake"
 gem "minitest", ">= 5"
 gem "combustion"
